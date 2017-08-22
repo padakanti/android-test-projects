@@ -42,11 +42,13 @@ As part of your pre-work submission, please reflect on the app and answer the fo
 
 **Question 1:** "What are your reactions to the Android app development platform so far? Compare and contrast Android's approach to layouts and user interfaces in past platforms you've used."
 
-**Answer:** [Enter your answer here in a paragraph or two].
+**Answer:** Previous UI frameworks used are comparable to Android but in different languages.  Android tooling are very help visualizing layout, making changes, and supporting different devices.  I am yet to explore further with debugging techniques but overall Android app development platform looks promising.
 
 **Question 2:** "Take a moment to reflect on the `ArrayAdapter` used in your pre-work. How would you describe an adapter in this context and what is its function in Android? Why do you think the adapter is important? Explain the purpose of the `convertView` in the `getView` method of the `ArrayAdapter`."
 
-**Answer:** [Enter your answer here in a paragraph or two].
+**Answer:**  Array adapter creates a view for each task item. It used the resource ID(simple_list_item_1) for the layout file containing the TextView when instantiating task item view.  
+
+'convertView' of 'getView' defines an old view to reuse, if possible. If it is not possible to convert this view to display the correct data, getView method can create a new view.
 
 ## Notes
 
