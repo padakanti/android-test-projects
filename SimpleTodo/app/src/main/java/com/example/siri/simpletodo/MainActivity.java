@@ -5,23 +5,20 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import org.apache.commons.io.FileUtils;
-
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.example.siri.simpletodo.R.id.lvItems;
 
 public class MainActivity extends AppCompatActivity {
-    private ArrayList tasks;
-    private ArrayAdapter tasksAdapter;
+    private ArrayList<Task> tasks;
+    private TasksAdapter tasksAdapter;
     private ListView lvTasks;
+
     private final int REQUEST_CODE = 20;
 
     @Override
@@ -29,33 +26,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         lvTasks = (ListView)findViewById(lvItems);
+        tasks = new ArrayList<>();
+        tasksAdapter = new TasksAdapter(this, tasks);
         readItems();
-        tasksAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, tasks);
         lvTasks.setAdapter(tasksAdapter);
         setUpListViewListener();
     }
 
     private void readItems() {
-        File filesDir = getFilesDir();
-        File todoFile = new File(filesDir, "todo.txt");
-        try {
-            tasks = new ArrayList<String>(FileUtils.readLines(todoFile));
-        }
-        catch(IOException e) {
-            tasks = new ArrayList<String>();
-        }
-    }
-
-    private void writeItems() {
-        File filesDir = getFilesDir();
-        File todoFile = new File(filesDir, "todo.txt");
-
-        try {
-            FileUtils.writeLines(todoFile, tasks);
-        }
-        catch (IOException e){
-            e.printStackTrace();
-        }
+        List<Task> taskList = Task.getAll();
+        tasksAdapter.addAll(taskList);
     }
 
     public void setUpListViewListener() {
@@ -64,10 +44,12 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public boolean onItemLongClick(AdapterView<?> adapter,
                                                    View view, int pos, long id) {
-                        tasks.remove(pos);
+                        Task tsk = tasks.remove(pos);
+                        if (tsk != null) {
+                            tsk.delete();
+                        }
                         tasksAdapter.notifyDataSetChanged();
                         Toast.makeText(getApplicationContext(), "Task removed", Toast.LENGTH_SHORT).show();
-                        writeItems();
                         return true;
                     }
                 }
@@ -76,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i = new Intent(MainActivity.this, EditItemActivity.class);
-                i.putExtra("taskName", lvTasks.getItemAtPosition(position).toString());
+                i.putExtra("taskName", ((Task)lvTasks.getItemAtPosition(position)).getTaskName());
                 i.putExtra("position", position);
                 startActivityForResult(i, REQUEST_CODE);
             }
@@ -90,29 +72,28 @@ public class MainActivity extends AppCompatActivity {
             // Extract name value from result extras
             String newTaskName = data.getExtras().getString("newTaskName");
             int position = data.getExtras().getInt("position", 0);
-
-            if (newTaskName.isEmpty()) {
-
-                // Remove task if task name is empty
-                tasks.remove(position);
-            } else {
-                tasks.set(position, newTaskName);
-            }
-
+            Task tsk = tasks.get(position);
+            tsk.setTaskName(newTaskName);
+            tsk.save();
             tasksAdapter.notifyDataSetChanged();
-            writeItems();
         }
     }
 
     public void onAddTask(View v) {
         EditText etNewTask = (EditText) findViewById(R.id.etNewItem);
-        String itemText = etNewTask.getText().toString();
+        String itemText = etNewTask.getText().toString().trim();
         if (itemText.isEmpty()) {
             Toast.makeText(getApplicationContext(), "Invalid task name", Toast.LENGTH_SHORT).show();
         } else {
-            tasksAdapter.add(itemText);
-            etNewTask.setText("");
-            writeItems();
+            Task tsk = new Task();
+            tsk.setId(tasks.size());
+            tsk.setTaskName(itemText);
+            tsk.setPriority(0);
+            tsk.setComplete(false);
+            tsk.save();
+            tasks.add(tsk);
+            tasksAdapter.notifyDataSetChanged();
         }
+        etNewTask.setText("");
     }
 }
