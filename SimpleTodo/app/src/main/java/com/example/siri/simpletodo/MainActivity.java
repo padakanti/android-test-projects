@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent i = new Intent(MainActivity.this, EditItemActivity.class);
                 i.putExtra("taskName", ((Task)lvTasks.getItemAtPosition(position)).getTaskName());
                 i.putExtra("position", position);
+                i.putExtra("taskStatus", ((Task)lvTasks.getItemAtPosition(position)).getComplete());
                 startActivityForResult(i, REQUEST_CODE);
             }
         });
@@ -72,8 +73,10 @@ public class MainActivity extends AppCompatActivity {
             // Extract name value from result extras
             String newTaskName = data.getExtras().getString("newTaskName");
             int position = data.getExtras().getInt("position", 0);
+            boolean taskStatus = data.getExtras().getBoolean("taskStatus", false);
             Task tsk = tasks.get(position);
             tsk.setTaskName(newTaskName);
+            tsk.setComplete(taskStatus);
             tsk.save();
             tasksAdapter.notifyDataSetChanged();
         }

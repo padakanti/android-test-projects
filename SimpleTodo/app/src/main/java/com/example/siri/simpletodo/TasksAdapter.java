@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -22,19 +23,39 @@ public class TasksAdapter extends ArrayAdapter<Task> {
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get the data item for this position
         Task task = getItem(position);
+
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(android.R.layout.simple_list_item_1, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_task, parent, false);
         }
-        // Lookup view for data population
-        Task item = (Task) getItem(position);
-        if (item != null) {
-            TextView itemView = (TextView) convertView.findViewById(android.R.id.text1);
-            if (itemView != null) {
-                itemView.setText(item.getTaskName());
+
+        if (task != null) {
+            // Lookup view for data population
+            TextView tskName = (TextView) convertView.findViewById(R.id.tskName);
+            CheckBox tskStatus = (CheckBox) convertView.findViewById(R.id.tskStatus);
+            // Populate the data into the template view using the data object
+            if (tskName != null) {
+                tskName.setText(task.getTaskName());
             }
+            if (tskStatus != null) {
+                tskStatus.setChecked(task.getComplete());
+            }
+            tskStatus.setOnClickListener(onClickListener);
+            tskStatus.setTag(position);
         }
+
         // Return the completed view to render on screen
         return convertView;
     }
+
+    private View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            CheckBox taskStatus = (CheckBox) v;
+            int position = (int) taskStatus.getTag();
+            Task task = getItem(position);
+            task.setComplete(taskStatus.isChecked());
+            task.save();
+        }
+    };
 }

@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants"
+    android:weightSum="1">
+
     <TextView
         android:id="@+id/tskName"
+        android:layout_centerVertical="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TaskName" />
-    <TextView
-        android:id="@+id/tskPriority"
+        android:layout_weight="0.99"
+        android:text="TaskName"
+        android:textSize="24sp" />
+
+    <CheckBox
+        android:id="@+id/tskStatus"
+        android:checked="false"
+        android:layout_centerVertical="true"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Priority" />
+        android:layout_height="wrap_content" />
+
 </LinearLayout>
