@@ -13,10 +13,10 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:text=""
-        android:layout_marginTop="46dp"
         android:layout_below="@+id/tvEditTask"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layout_marginTop="14dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
@@ -24,22 +24,69 @@
         android:id="@+id/tvEditTask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:layout_marginTop="15dp"
+        android:text="@string/edit_task"
+        android:textSize="18sp"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="51dp"
-        android:text="@string/Edit_Task" />
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:id="@+id/btnSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/etTaskName"
-        android:layout_marginLeft="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="33dp"
         android:onClick="onSave"
-        android:text="@string/Save_Button" />
+        android:text="@string/save_button"
+        android:layout_marginTop="60dp"
+        android:layout_below="@+id/setDate"
+        android:layout_centerHorizontal="true" />
+
+    <CheckBox
+        android:id="@+id/task_complete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="@string/task_complete"
+        android:textSize="18sp"
+        android:layout_below="@+id/etTaskName"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <CheckBox
+        android:id="@+id/high_priority"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="@string/high_priority"
+        android:textSize="18sp"
+        android:layout_below="@+id/task_complete"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:id="@+id/setDate"
+        android:onClick="onSetDate"
+        android:text=""
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="27dp"
+        android:layout_below="@+id/high_priority"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_toRightOf="@+id/tvEditTask"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/setDate"
+        android:layout_alignLeft="@+id/high_priority"
+        android:layout_alignStart="@+id/high_priority"
+        android:layout_alignTop="@+id/setDate"
+        android:layout_centerHorizontal="true"
+        android:layout_toLeftOf="@+id/setDate"
+        android:text="@string/set_date"
+        android:gravity="center"
+        android:textSize="18sp" />
+
 </RelativeLayout>

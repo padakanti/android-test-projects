@@ -15,7 +15,7 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/lvItems"
         android:onClick="onAddTask"
-        android:text="@string/Add_Task" />
+        android:text="@string/add_task" />
 
     <EditText
         android:id="@+id/etNewItem"
@@ -27,7 +27,7 @@
         android:layout_toLeftOf="@+id/btnAddItem"
         android:layout_toStartOf="@+id/btnAddItem"
         android:ems="10"
-        android:hint="@string/Enter_New_task"
+        android:hint="@string/enter_new_task"
         android:inputType="textPersonName"
         android:text="" />
 

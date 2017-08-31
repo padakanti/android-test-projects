@@ -60,7 +60,11 @@ public class MainActivity extends AppCompatActivity {
                 Intent i = new Intent(MainActivity.this, EditItemActivity.class);
                 i.putExtra("taskName", ((Task)lvTasks.getItemAtPosition(position)).getTaskName());
                 i.putExtra("position", position);
-                i.putExtra("taskStatus", ((Task)lvTasks.getItemAtPosition(position)).getComplete());
+
+                i.putExtra("isCompleted", ((Task)lvTasks.getItemAtPosition(position)).getComplete());
+                i.putExtra("isHighPriority", ((Task)lvTasks.getItemAtPosition(position)).getPriority());
+
+                //i.putExtra("dueDate")
                 startActivityForResult(i, REQUEST_CODE);
             }
         });
@@ -73,10 +77,12 @@ public class MainActivity extends AppCompatActivity {
             // Extract name value from result extras
             String newTaskName = data.getExtras().getString("newTaskName");
             int position = data.getExtras().getInt("position", 0);
-            boolean taskStatus = data.getExtras().getBoolean("taskStatus", false);
+            boolean taskStatus = data.getExtras().getBoolean("isCompleted", false);
+            int isHighPriority = data.getExtras().getInt("isHighPriority", 0);
             Task tsk = tasks.get(position);
             tsk.setTaskName(newTaskName);
             tsk.setComplete(taskStatus);
+            tsk.setPriority(isHighPriority);
             tsk.save();
             tasksAdapter.notifyDataSetChanged();
         }

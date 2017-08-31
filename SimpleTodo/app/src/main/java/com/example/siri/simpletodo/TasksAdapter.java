@@ -1,6 +1,8 @@
 package com.example.siri.simpletodo;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +44,12 @@ public class TasksAdapter extends ArrayAdapter<Task> {
             }
             tskStatus.setOnClickListener(onClickListener);
             tskStatus.setTag(position);
+
+            if(task.getPriority()==1) {
+                tskName.setTextColor(Color.RED);
+            } else {
+                tskName.setTextColor(ContextCompat.getColor(getContext(), R.color.colorPrimaryDark));
+            }
         }
 
         // Return the completed view to render on screen

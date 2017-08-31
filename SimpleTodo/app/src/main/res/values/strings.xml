@@ -1,7 +1,10 @@
 <resources>
-    <string name="app_name">SimpleTodo</string>
-    <string name="Add_Task">Add Task</string>
-    <string name="Enter_New_task">Enter a new task</string>
-    <string name="Edit_Task">Edit Task Below:</string>
-    <string name="Save_Button">Save</string>
+    <string name="app_name">My Tasks</string>
+    <string name="add_task">Add Task</string>
+    <string name="enter_new_task">Enter a new task</string>
+    <string name="edit_task">Edit Task</string>
+    <string name="save_button">Save</string>
+    <string name="task_complete">Task Complete?</string>
+    <string name="set_date">Set Due Date:</string>
+    <string name="high_priority">High Priority?</string>
 </resources>
